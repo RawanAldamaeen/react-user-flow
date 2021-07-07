@@ -1,71 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogin } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
 import * as yup from "yup";
 
 const LoginForm = () => {
-  const [EmailValid, setEmailValid] = useState({
-    touched: false,
-    isValid: false,
-    errMsg: "",
-  });
-
-  const [passwordValid, setPasswordValid] = useState({
-    touched: false,
-    isValid: false,
-    errMsg: "",
-  });
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const checkEmailValidation = (event) => {
-    let val = event.target.value.trim();
-    let valid = { ...EmailValid };
-    valid.touched = true;
-
-    if (val.length <= 0) {
-      valid.isValid = false;
-    } else if (val.split(" ").length < 3) {
-      valid.isValid = false;
-    } else if (val.split(" ").length > 10) {
-      valid.isValid = false;
-    } else {
-      valid.isValid = true;
-      valid.errMsg = "";
-    }
-    setEmailValid({ ...valid });
-  };
-  const checkPasswordValidation = (event) => {
-    let val = event.target.value.trim();
-    let valid = { ...passwordValid };
-    valid.touched = true;
-
-    if (val.length <= 0) {
-      valid.isValid = false;
-    } else if (val.split(" ").length < 10) {
-      valid.isValid = false;
-    } else if (val.split(" ").length > 500) {
-      valid.isValid = false;
-    } else {
-      valid.isValid = true;
-      valid.errMsg = "";
-    }
-    setPasswordValid({ ...valid });
-  };
-
-  const handleSubmitForm = (values, { setSubmitting }) => {
-    setIsLoading(true);
-    console.log(values.email);
-    console.log(values.password);
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-    setIsLoading(false);
-  };
+  const isLogged = useSelector((state) => state.user.logged);
+  const errorMsg = useSelector((state) => state.user.err_msg);
+  const dispatch = useDispatch();
 
   const LoginValidation = yup.object().shape({
     email: yup.string().email().required(),
-    password: yup.string().min(8, "Too Short!").max(16).required(),
+    password: yup
+      .string()
+      .min(8, "Password should be at least 8 characters")
+      .required(),
   });
   return (
     <div className="login d-flex align-items-center py-5">
@@ -76,7 +25,6 @@ const LoginForm = () => {
             <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={LoginValidation}
-              onSubmit={handleSubmitForm}
             >
               {({
                 values,
@@ -87,7 +35,7 @@ const LoginForm = () => {
                 handleSubmit,
                 isSubmitting,
               }) => (
-                <Form onSubmit={handleSubmit}>
+                <Form>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Email: </label>
                     <Field
@@ -141,6 +89,7 @@ const LoginForm = () => {
                     </a>
                   </p>
                   <button
+                    onClick={() => dispatch(userLogin(values))}
                     type="submit"
                     disabled={isSubmitting}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
@@ -155,6 +104,15 @@ const LoginForm = () => {
                       </a>
                     </p>
                   </div>
+                  {isLogged ? (
+                    <div className="alert alert-success" role="alert">
+                      sucess
+                    </div>
+                  ) : errorMsg ? (
+                    <div className="alert alert-danger" role="alert">
+                      {errorMsg}
+                    </div>
+                  ) : null}
                 </Form>
               )}
             </Formik>
