@@ -2,7 +2,6 @@ import axios from "axios";
 import Types from "./types";
 
 export const userLogin = (user) => {
-  console.log(user.email);
   return async (dispatch) => {
     const query = { email: user.email, password: user.password, client_id: '2', client_secret: 'fhMZQxfVREJrII50IeN4ThIZCerdOFjxiRGu7Lc0'}
     const headers= {
@@ -21,6 +20,26 @@ export const userLogin = (user) => {
       type: Types.AUTH_FAILED,
       logged: false,
       err_msg: "Your Email or Password is uncorrect"
+      
+    })})
+  };
+};
+
+export const userRegister = (user) => {
+  return async (dispatch) => {
+    const query = {name:user.username, email: user.email, password: user.password, password_confirmation: user.confirmPassword, mobile_number: user.phone}
+    const headers= {
+      'x-api-key': 'boilerplate_react',
+    }
+    const request = await axios.post('https://boiler-stage.ibtikar.sa/api/v1/users', query, {headers})
+    .then(response => {return dispatch({
+      type: Types.REGISTER,
+      signed: true,
+    })})
+    .catch(error => {return dispatch({
+      type: Types.REGISTER_FAILED,
+      signed: false,
+      err_msg: error.response.data.errors
       
     })})
   };

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
@@ -99,9 +100,9 @@ const LoginForm = () => {
                   <div className="text-center d-flex justify-content-between mt-4">
                     <p>
                       Don't have account?
-                      <a href="#" className="font-italic text-muted ml-2">
+                      <Link to="/register" className="font-italic text-muted ml-2">
                         <u>Sign up</u>
-                      </a>
+                      </Link>
                     </p>
                   </div>
                   {isLogged ? (
