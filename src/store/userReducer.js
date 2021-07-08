@@ -5,6 +5,7 @@ const initialState = {
   logged: false,
   err_msg: "",
   signed: false,
+  pass: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +32,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         signed: false,
+        err_msg: action.err_msg,
+      };
+    case Types.FORGET_PASS_SUCCEESS:
+      return {
+        ...state,
+        pass: true,
+      };
+    case Types.FORGET_PASS_FAILED:
+      return {
+        ...state,
+        pass: false,
         err_msg: action.err_msg,
       };
     default:
