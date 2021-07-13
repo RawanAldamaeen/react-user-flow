@@ -6,6 +6,7 @@ const initialState = {
   err_msg: "",
   signed: false,
   pass: false,
+  reset: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +39,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pass: true,
+        email: action.email
       };
     case Types.FORGET_PASS_FAILED:
       return {
@@ -45,6 +47,29 @@ const reducer = (state = initialState, action) => {
         pass: false,
         err_msg: action.err_msg,
       };
+    case Types.VERIFY_SUCCESS:
+      return {
+        ...state,
+        pass: true,
+        token: action.token,
+      };
+    case Types.VERIFY_FAILED:
+      return {
+        ...state,
+        pass: false,
+        err_msg: action.err_msg,
+      };
+    case Types.RESET_SUCCESS:
+      return{
+        ...state,
+        reset:true,
+      }  
+    case Types.RESET_FAILED:
+      return{
+        ...state,
+        reset: false,
+        err_msg: action.err_msg,
+      }  
     default:
       return state;
   }

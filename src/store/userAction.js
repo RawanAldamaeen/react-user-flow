@@ -75,18 +75,90 @@ export const userForgetPassword = (user) => {
       "x-api-key": "boilerplate_react",
     };
     const request = await axios
-      .post("https://boiler-stage.ibtikar.sa/api/v1/users/password/forget", query, { headers })
+      .post(
+        "https://boiler-stage.ibtikar.sa/api/v1/users/password/forget",
+        query,
+        { headers }
+      )
       .then((response) => {
         return dispatch({
           type: Types.FORGET_PASS_SUCCEESS,
           pass: true,
+          email: user.email,
         });
       })
       .catch((error) => {
         return dispatch({
           type: Types.FORGET_PASS_FAILED,
           pass: false,
-          err_msg: error.response.data.errors
+          err_msg: error.response.data.errors,
+        });
+      });
+  };
+};
+
+export const userVerifyCode = (user) => {
+  const email = localStorage.getItem("email");
+  return async (dispatch) => {
+    const query = {
+      token: user.code,
+      email: email,
+    };
+    const headers = {
+      "x-api-key": "boilerplate_react",
+    };
+    const request = await axios
+      .post(
+        "https://boiler-stage.ibtikar.sa/api/v1/users/password/validate-token",
+        query,
+        { headers }
+      )
+      .then((response) => {
+        return dispatch({
+          type: Types.VERIFY_SUCCESS,
+          pass: true,
+          token: user.code,
+        });
+      })
+      .catch((error) => {
+        return dispatch({
+          type: Types.VERIFY_FAILED,
+          pass: false,
+          err_msg: "invalid token",
+        });
+      });
+  };
+};
+
+export const userResetPassword = (user) => {
+  const token = localStorage.getItem("code");
+  const email = localStorage.getItem("email");
+  return async (dispatch) => {
+    const query = {
+      email: email,
+      token: token,
+      password: user.password
+    };
+    const headers = {
+      "x-api-key": "boilerplate_react",
+    };
+    const request = await axios
+      .post(
+        "https://boiler-stage.ibtikar.sa/api/v1/users/password/reset",
+        query,
+        { headers }
+      )
+      .then((response) => {
+        return dispatch({
+          type: Types.RESET_SUCCESS,
+          reset: true,
+        });
+      })
+      .catch((error) => {
+        return dispatch({
+          type: Types.RESET_FAILED,
+          reset: false,
+          err_msg: 'something wrong happen.!',
         });
       });
   };

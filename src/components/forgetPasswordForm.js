@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import {Link , Redirect} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { userForgetPassword } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
@@ -9,7 +9,13 @@ import * as yup from "yup";
 const ForgetPasswordForm = () => {
   const isPass = useSelector((state) => state.user.pass);
   const errorMsg = useSelector((state) => state.user.err_msg);
+  const email = useSelector((state) => state.user.email)
   const dispatch = useDispatch();
+
+
+  if (isPass){
+    localStorage.setItem('email', email)
+  }
 
   const ForgetPasswordValidation = yup.object().shape({
     email: yup.string().email().required(),
@@ -73,9 +79,7 @@ const ForgetPasswordForm = () => {
                   </div>
 
                   {isPass ? (
-                    <div className="alert alert-success" role="alert">
-                      sucess
-                    </div>
+                    <Redirect to="/forgetPassword/code" />
                   ) : errorMsg ? (
                     <div className="alert alert-danger" role="alert" key={errorMsg.type}>
                       {errorMsg[0].error}

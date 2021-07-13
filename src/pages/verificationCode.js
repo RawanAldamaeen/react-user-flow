@@ -1,5 +1,5 @@
 import React from "react";
-import ForgetPasswordForm from "../components/forgetPasswordForm"
+import VerificationCodeForm from "../components/verificationCodeForm"
 import thunk from "redux-thunk"
 import reducers from "../store/allReducers"
 import { createStore, applyMiddleware, compose } from "redux";
@@ -21,7 +21,7 @@ let store = createStore(
   composeEnhancers(applyMiddleware(logger, thunk))
 )
 
-const ForgetPassword = () => {
+const VerificationCode = () => {
 
   return (
     <Provider store={store}>
@@ -31,7 +31,7 @@ const ForgetPassword = () => {
           <div className="col-md-6 d-none d-md-flex"></div>
 
           <div className="col-md-6 bg-light">
-            <ForgetPasswordForm />
+            <VerificationCodeForm />
           </div>
         </div>
       </div>
@@ -40,4 +40,4 @@ const ForgetPassword = () => {
   );
 };
 
-export default ForgetPassword;
+export default VerificationCode;
