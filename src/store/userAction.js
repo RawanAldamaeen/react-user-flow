@@ -12,8 +12,6 @@ export const userLogin = (user) => {
     const headers = {
       "accept-language": "en",
       "x-api-key": "boilerplate_react",
-      Authorization:
-        "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiN2I5YjdlZWUzZDczOGUwODg4Y2RkZTM0YTZlNzE3OGRlZDMzYTYwMTFjMDdiNTkwMzY3YTk2ODA1Y2YwMTU4ZDUwZDNmMGNiZDRkZGQ5YzciLCJpYXQiOjE2MDkwNjk0NzMsIm5iZiI6MTYwOTA2OTQ3MywiZXhwIjoxNjQwNjA1NDczLCJzdWIiOiIyNCIsInNjb3BlcyI6WyIqIl19.nNJyWcOs_ahAXWNlZbssfeGTxjshoawMCMRcNysFbmjdvX-aaXsRpXkLNHRWpxA4GmGH-HBsweUAq2DX7KuC1qR_QqJ-pBWEOX2bhI5KId068FlZQH5m6IsGe1pyKt6Ic479xz9LMwitH_uCTukSAH77lJucuEE5eOBLeyniimWqop17_Gp-FnpRwjmx1EZpcTAT4mkVKB2ZMQdO-RODMxIxWPbTt81EUajkrFfOETXdm478s0eQzpOhoCycXeySOIXFm3nm35UPJbkzu-PlPZob--QdH2jcT2-7xXSSlUUm6vLG8T9kYkcDYewqHj67tr21rSbtFYol3IPE8Vn8eTRfhQb1nMwuUUOeFzdRQrxNKrwuXqzDVr4oCk6hsZ0r6tH8zokM3RzhUJWgPuU6_YgUWi1s1GKMCNd74qFrMXQRF7awdT9RGdkecA84lGrkSPZstEpLzxWhD5mTosBIDHS1fqNpcqUoBc_MRcXXxTugzav2cJT-UhfuZqDbo5XEKstHYabaMYdGSNSP73eMeaV0ghqB1uD082PuQ5ymYnGx2vfU4KoOLQwDmJO4fDTYzXksJdmxfsSW_E3Ohg7kVET61BhQCMSLxS82NSnr7dk2Z-_BqcRuMIgS2XHUYMvL1WU4GBACtqnlPkS6p6jQnPGbJGlGmStulTT3G-4s4aI",
     };
     const request = await axios
       .post("https://boiler-stage.ibtikar.sa/api/v1/users/login", query, {
@@ -137,7 +135,7 @@ export const userResetPassword = (user) => {
     const query = {
       email: email,
       token: token,
-      password: user.password
+      password: user.password,
     };
     const headers = {
       "x-api-key": "boilerplate_react",
@@ -158,7 +156,62 @@ export const userResetPassword = (user) => {
         return dispatch({
           type: Types.RESET_FAILED,
           reset: false,
-          err_msg: 'something wrong happen.!',
+          err_msg: "something wrong happen.!",
+        });
+      });
+  };
+};
+
+export const usersList = (page) => {
+  const params = {
+    page: page + 1,
+  };
+
+  const headers = {
+    "Accept-Language": "en",
+    "x-api-key": "boilerplate_react",
+  };
+  return async (dispatch) => {
+    const request = await axios
+      .get(
+        "https://boiler-stage.ibtikar.sa/api/v1/users",
+        { params },
+        { headers }
+      )
+      .then((response) => {
+        return dispatch({
+          type: Types.USERS_LIST,
+          list: response.data.data,
+          allUsers: response.data.meta.total,
+          hasNext: response.data.meta.has_next,
+          currentPage: response.data.meta.current_page,
+        });
+      });
+  };
+};
+
+export const Search = (value) => {
+  const params = {
+    name: value,
+  };
+  const headers = {
+    "Accept-Language": "en",
+    "x-api-key": "boilerplate_react",
+  };
+  return async (dispatch) => {
+    const request = await axios
+      .get(
+        "https://boiler-stage.ibtikar.sa/api/v1/users",
+        { params },
+        { headers }
+      )
+      .then((response) => {
+        return dispatch({
+          type: Types.USERS_LIST,
+          list: response.data.data,
+          allUsers: response.data.meta.total,
+          hasNext: response.data.meta.has_next,
+          currentPage: response.data.meta.current_page,
         });
       });
   };

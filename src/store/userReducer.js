@@ -7,6 +7,11 @@ const initialState = {
   signed: false,
   pass: false,
   reset: false,
+  sucess: false,
+  list : [],
+  allUsers:0,
+  hasNext:false,
+  currentPage:0
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,7 +44,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         pass: true,
-        email: action.email
+        email: action.email,
       };
     case Types.FORGET_PASS_FAILED:
       return {
@@ -60,16 +65,24 @@ const reducer = (state = initialState, action) => {
         err_msg: action.err_msg,
       };
     case Types.RESET_SUCCESS:
-      return{
+      return {
         ...state,
-        reset:true,
-      }  
+        reset: true,
+      };
     case Types.RESET_FAILED:
-      return{
+      return {
         ...state,
         reset: false,
         err_msg: action.err_msg,
-      }  
+      };
+    case Types.USERS_LIST:
+      return {
+        ...state,
+        list: action.list,
+        allUsers: action.allUsers,
+        hasNext:action.hasNext,
+        currentPage:action.currentPage
+      };
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import ForgetPassword from "./pages/forgetPassword"
 import VerificationCode from "./pages/verificationCode"
 import ResetPassword from "./pages/resetPassword"
+import Dashboard from "./pages/userList"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.render(
     <Route path="/forgetPassword" exact component={ForgetPassword} />
     <Route path="/forgetPassword/code" component={VerificationCode} />
     <Route path="/forgetPassword/reset" component={ResetPassword} />
+    <Route path="/dashboard" component={Dashboard} />
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
