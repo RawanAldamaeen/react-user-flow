@@ -35,9 +35,7 @@ const ForgetPasswordForm = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
+                handleBlur
               }) => (
                 <Form>
                   <div className="form-group mb-3">
@@ -58,14 +56,11 @@ const ForgetPasswordForm = () => {
                     />
                     {errors.email && touched.email ? (
                       <small className="text-danger p-1">{errors.email}</small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
                   <button
                     onClick={() => dispatch(userForgetPassword(values))}
                     type="submit"
-                    disabled={isSubmitting}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
                   >
                     Submit

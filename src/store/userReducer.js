@@ -80,8 +80,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         list: action.list,
         allUsers: action.allUsers,
-        hasNext:action.hasNext,
-        currentPage:action.currentPage
       };
     default:
       return state;

@@ -183,8 +183,6 @@ export const usersList = (page) => {
           type: Types.USERS_LIST,
           list: response.data.data,
           allUsers: response.data.meta.total,
-          hasNext: response.data.meta.has_next,
-          currentPage: response.data.meta.current_page,
         });
       });
   };
@@ -210,8 +208,6 @@ export const Search = (value) => {
           type: Types.USERS_LIST,
           list: response.data.data,
           allUsers: response.data.meta.total,
-          hasNext: response.data.meta.has_next,
-          currentPage: response.data.meta.current_page,
         });
       });
   };

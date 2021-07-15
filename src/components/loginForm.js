@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
@@ -8,15 +8,9 @@ import * as yup from "yup";
 const LoginForm = () => {
   const isLogged = useSelector((state) => state.user.logged);
   const errorMsg = useSelector((state) => state.user.err_msg);
-  // const email = useSelector((state) => state.user.email )
 
   const dispatch = useDispatch();
-  
 
-  // if(isLogged){
-  //   localStorage.setItem('email', email)
-  // }
- 
   const LoginValidation = yup.object().shape({
     email: yup.string().email().required(),
     password: yup
@@ -34,15 +28,7 @@ const LoginForm = () => {
               initialValues={{ email: "", password: "" }}
               validationSchema={LoginValidation}
             >
-              {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
-              }) => (
+              {({ values, errors, touched, handleChange, handleBlur }) => (
                 <Form>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Email: </label>
@@ -62,9 +48,7 @@ const LoginForm = () => {
                     />
                     {errors.email && touched.email ? (
                       <small className="text-danger p-1">{errors.email}</small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Password: </label>
@@ -87,35 +71,36 @@ const LoginForm = () => {
                       <small className="text-danger p-1">
                         {errors.password}
                       </small>
-                    ) : (
-                      " "
-                    )}{" "}
+                    ) : null}
                   </div>
                   <p>
-                    <Link to="/forgetPassword" className="font-italic text-muted">
+                    <Link
+                      to="/forgetPassword"
+                      className="font-italic text-muted"
+                    >
                       <u>Forget Password?</u>
                     </Link>
                   </p>
                   <button
                     onClick={() => dispatch(userLogin(values))}
                     type="submit"
-                    disabled={isSubmitting}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
                   >
-                    {!isSubmitting ? "Login" : "loading..."}
+                    Login
                   </button>
                   <div className="text-center d-flex justify-content-between mt-4">
                     <p>
                       Don't have account?
-                      <Link to="/register" className="font-italic text-muted ml-2">
+                      <Link
+                        to="/register"
+                        className="font-italic text-muted ml-2"
+                      >
                         <u>Sign up</u>
                       </Link>
                     </p>
                   </div>
                   {isLogged ? (
-                    <div className="alert alert-success" role="alert" >
-                      sucess
-                    </div>
+                    <Redirect to="/dashboard" />
                   ) : errorMsg ? (
                     <div className="alert alert-danger" role="alert">
                       {errorMsg}

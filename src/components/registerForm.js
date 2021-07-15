@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom"
+import {Link, Redirect} from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { userRegister } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
@@ -57,8 +57,6 @@ const RegisterForm = () => {
                 touched,
                 handleChange,
                 handleBlur,
-                handleSubmit,
-                isSubmitting,
               }) => (
                 <Form>
                   <div className="form-group mb-3">
@@ -80,9 +78,7 @@ const RegisterForm = () => {
                     />
                     {errors.email && touched.email ? (
                       <small className="text-danger p-1">{errors.email}</small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Password: </label>
@@ -105,9 +101,7 @@ const RegisterForm = () => {
                       <small className="text-danger p-1">
                         {errors.password}
                       </small>
-                    ) : (
-                      " "
-                    )}{" "}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Confirm Password: </label>
@@ -130,9 +124,7 @@ const RegisterForm = () => {
                       <small className="text-danger p-1">
                         {errors.confirmPassword}
                       </small>
-                    ) : (
-                      " "
-                    )}{" "}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Username: </label>
@@ -155,9 +147,7 @@ const RegisterForm = () => {
                       <small className="text-danger p-1">
                         {errors.username}
                       </small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Phone Number: </label>
@@ -178,31 +168,26 @@ const RegisterForm = () => {
                     />
                     {errors.phone && touched.phone ? (
                       <small className="text-danger p-1">{errors.phone}</small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
 
                   <button
                     onClick={() => dispatch(userRegister(values))}
                     type="submit"
-                    disabled={isSubmitting}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
                   >
-                    {!isSubmitting ? "Register" : "loading..."}
+                    Register
                   </button>
                   <div className="text-center d-flex justify-content-between mt-4">
                     <p>
-                      Alredy have account?
+                      Already have account?
                       <Link to="/login" className="font-italic text-muted ml-2">
                         <u>Login</u>
                       </Link>
                     </p>
                   </div>
                   {isAccapted ? (
-                    <div className="alert alert-success" role="alert">
-                      sucess
-                    </div>
+                    <Redirect to="/login" />
                   ) : errorMsg ? (
                     <div>
                       {errorMsg.map((error) => (

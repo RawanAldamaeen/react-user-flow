@@ -64,7 +64,7 @@ const Users = () => {
                           <img
                             src="http://www.gravatar.com/avatar/?d=mp"
                             alt=""
-                          />{" "}
+                          />
                         </div>
                       </div>
                       <div className="col-lg-8">

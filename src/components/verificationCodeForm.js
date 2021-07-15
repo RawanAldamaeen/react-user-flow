@@ -22,6 +22,7 @@ const VerificationCodeForm = () => {
   const verificationCodeValidation = yup.object().shape({
     code: yup.string().required().length(10),
   });
+  
   return (
     <div className="login d-flex align-items-center py-5">
       <div className="container">
@@ -37,9 +38,7 @@ const VerificationCodeForm = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
+                handleBlur
               }) => (
                 <Form>
                   <div className="form-group mb-3">
@@ -60,34 +59,23 @@ const VerificationCodeForm = () => {
                     />
                     {errors.code && touched.code ? (
                       <small className="text-danger p-1">{errors.code}</small>
-                    ) : (
-                      " "
-                    )}
+                    ) : null}
                   </div>
                   <button
                     onClick={() => dispatch(userVerifyCode(values))}
                     type="submit"
-                    disabled={touched.code && (errors.code || !values.code)}
+                    disabled={!values.code}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
                   >
                     Submit
                   </button>
-                  <div className="text-center d-flex justify-content-between mt-4">
-                    <p>
-                      <Link
-                        className="font-italic text-muted ml-2"
-                        onClick={() => dispatch(userForgetPassword(resend))}
-                      >
-                        <u>Resend</u>
-                      </Link>
-                    </p>
-                  </div>
+                  <div className="text-center d-flex justify-content-between mt-4"></div>
 
                   {isPass && token ? (
                     <Redirect to="/forgetPassword/reset" />
-                  ) : isPass ?(
+                  ) : isPass ? (
                     <div className="alert alert-success" role="alert">
-                      Resend email successfuly 
+                      Resend email successfuly
                     </div>
                   ) : errorMsg ? (
                     <div className="alert alert-danger" role="alert">
@@ -97,6 +85,14 @@ const VerificationCodeForm = () => {
                 </Form>
               )}
             </Formik>
+            <p> Didn't recive email? 
+              <Link
+                className="font-italic text-muted ml-2"
+                onClick={() => dispatch(userForgetPassword(resend))}
+              >
+                <u>Resend</u>
+              </Link>
+            </p>
           </div>
         </div>
       </div>

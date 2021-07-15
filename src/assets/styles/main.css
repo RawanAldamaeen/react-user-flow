@@ -2,11 +2,11 @@
 .image {
   min-height: 100vh;
 }
-/* .bg-image {
-  background-image: url('https://therichpost.com/wp-content/uploads/2021/02/login-split.jpg');
+.bg-image {
+  background-image: url('https://media-exp1.licdn.com/dms/image/C4D1BAQFlYdwHrLyakw/company-background_10000/0/1543843174778?e=2159024400&v=beta&t=M5kRXgpgPseFYnqvvijawFCFaDYa1Zknuwq6m2JY8lI');
   background-size: cover;
   background-position: center center;
-} */
+}
 
 body {
   margin-top: 20px;

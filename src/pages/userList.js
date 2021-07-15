@@ -4,8 +4,7 @@ import thunk from "redux-thunk";
 import reducers from "../store/allReducers";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
-import axios from "axios";
-import Types from "../store/types";
+
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userResetPassword } from "../store/userAction";
 import { Field, Formik, Form } from "formik";
@@ -39,9 +39,7 @@ const ReastPasswordForm = () => {
                 errors,
                 touched,
                 handleChange,
-                handleBlur,
-                handleSubmit,
-                isSubmitting,
+                handleBlur
               }) => (
                 <Form>
                   <div className="form-group mb-3">
@@ -65,9 +63,7 @@ const ReastPasswordForm = () => {
                       <small className="text-danger p-1">
                         {errors.password}
                       </small>
-                    ) : (
-                      " "
-                    )}{" "}
+                    ) : null}
                   </div>
                   <div className="form-group mb-3">
                     <label className="mb-2 pl-2"> Confirm Password: </label>
@@ -90,18 +86,15 @@ const ReastPasswordForm = () => {
                       <small className="text-danger p-1">
                         {errors.confirmPassword}
                       </small>
-                    ) : (
-                      " "
-                    )}{" "}
+                    ) : null}
                   </div>
 
                   <button
                     onClick={() => dispatch(userResetPassword(values))}
                     type="submit"
-                    disabled={isSubmitting}
                     className="btn btn-primary btn-block mb-2 mt-3  rounded-pill shadow-sm"
                   >
-                    {!isSubmitting ? "Reset Password" : "loading..."}
+                    Reset Password
                   </button>
                   {isPass ? (
                     <Redirect to="/login" />
@@ -121,4 +114,3 @@ const ReastPasswordForm = () => {
 };
 
 export default ReastPasswordForm;
-
